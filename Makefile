@@ -1,6 +1,6 @@
 cc = gcc
 flags = -Wall -Wextra -g -fsanitize=address
-flags_release = -Wall -Wextra -O3 -flto -mavx -D NDEBUG
+flags_release = -Wall -Wextra -Ofast -flto -funroll-loops -D NDEBUG
 flags_link = -flto
 main = main.c
 src_dir = ./src

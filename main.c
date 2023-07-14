@@ -21,17 +21,41 @@ void Arr_test(I64 len)
 void Vec_test(I64 len)
 {
     Vec v = Vec_init(I64);
+    Vec_reserve(& v, len);
+
     for (I64 k = 0; k < len; k ++)
     {
         Vec_push(& v, len - k);
     }
 
+    Vec_push(& v, (I64) -1);
     I64_dbg(Vec_last(& v));
     Vec_del(& v);
 }
+
+#include "alg/sort.h"
+void sort_test(I64 len)
+{
+    Vec v = Vec_init(I64);
+    for (I64 k = 0; k < len; k ++)
+    {
+        Vec_push(& v, len - k);
+    }
+
+    Slc s = Vec_to_Slc(& v);
+    // Slc_dbg(& s);
+    // sort_merge_slice_cmp(& s, I64_cmp);
+    sort(& v, Vec, I64);
+    // sort_insert_slice_cmp(& s, I64_cmp);
+    // Slc_dbg(& s);
+    I64_dbg(Slc_last(& s));
+
+    Vec_del(& v);
+}
+
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
-    printf("%zu\n", sizeof(Vec));
+    sort_test(1 << 25);
 }

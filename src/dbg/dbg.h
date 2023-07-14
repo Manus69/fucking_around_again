@@ -7,4 +7,9 @@
 static inline void type##_dbg(const void * ptr) \
 {printf(format, deref(type) ptr);}
 
+static inline void dbg_nl()
+{
+    printf("\n");
+}
+
 #endif

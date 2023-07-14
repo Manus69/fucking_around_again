@@ -3,6 +3,7 @@
 
 #include "../core/mem.h"
 #include "../type/Intr.h"
+#include "Slc.h"
 
 #define Arr_init(type, len) Arr_init_intr(& type##_Intr, len)
 #define Arr_set(arr_ptr, index, val) \
@@ -58,13 +59,22 @@ __always_inline static void Arr_set_ptr(const Arr * arr, I64 index, const void *
     Intr_put(arr->intr)(Arr_get(arr, index), ptr);
 }
 
-//arr_len ? slice ?
+static inline Slc Arr_slice(const Arr * arr, I64 index, I64 len)
+{
+    return Slc_init(Arr_get(arr, index), arr->intr, len);
+}
+
+static inline Slc Arr_to_Slc(const Arr * arr)
+{
+    return Arr_slice(arr, 0, Arr_len(arr));
+}
+
 static inline void Arr_map(const Arr * arr, F f)
 {
-    for (I64 k = 0; k < Arr_len(arr); k ++)
-    {
-        f(Arr_get(arr, k));
-    }
+    Slc slc;
+
+    slc = Arr_to_Slc(arr);
+    Slc_map(& slc, f);
 }
 
 static inline void Arr_dbg(const Arr * arr)
