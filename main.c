@@ -69,11 +69,23 @@ void Str_test()
     Vec_erase(& v);
 }
 
-//del in interface
+#include "struct/Pair.h"
+void Pair_test()
+{
+    Pair p = Pair_init(Str, Str);
+    Pair_set(& p, Str_init("eat"), Str_init("dick"));
+
+    Str_dbg(Pair_first(& p));
+    Str_dbg(Pair_second(& p));
+
+    Pair_erase(& p);
+}
+
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
     sort_test(1 << 25);
     // Str_test();
+    // Pair_test();
 }
