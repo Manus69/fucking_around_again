@@ -53,6 +53,12 @@ void sort_test(I64 len)
     Vec_del(& v);
 }
 
+#include "type/Str.h"
+void Str_test()
+{
+    
+}
+
 int main()
 {
     // Arr_test(1 << 10);

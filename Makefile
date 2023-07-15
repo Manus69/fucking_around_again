@@ -1,7 +1,18 @@
 cc = gcc
 flags = -Wall -Wextra -g -fsanitize=address
-flags_release = -Wall -Wextra -Ofast -flto -funroll-loops -D NDEBUG
-flags_link = -flto
+flags_release = -Wall -Wextra -O2 -flto -funroll-loops -D NDEBUG \
+-funsafe-math-optimizations \
+-fprefetch-loop-arrays \
+-ffast-math \
+-fpeel-loops \
+-fno-strict-aliasing \
+# -funswitch-loops \
+# -funit-at-a-time
+# -fdata-sections
+# -ftracer
+# -funroll-all-loops 
+# -ftree-loop-vectorize
+
 main = main.c
 src_dir = ./src
 obj_dir = ./obj
