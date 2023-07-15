@@ -26,10 +26,15 @@ static inline Vec Vec_init_intr(const Intr * intr, I64 capacity)
     return (Vec) {Arr_init_intr(intr, capacity), 0};
 }
 
-static inline void Vec_del(Vec * vec)
+static inline void Vec_del_struct(Vec * vec)
 {
-    Arr_del(& vec->arr);
+    Arr_del_struct(& vec->arr);
     to_zero(* vec);
+}
+
+static inline void Vec_del(void * ptr)
+{
+    Vec_del_struct(ptr);
 }
 
 __always_inline static const Intr * Vec_item_intr(const Vec * vec)
@@ -85,6 +90,36 @@ static inline Slc Vec_slice(const Vec * vec, I64 index, I64 len)
 static inline Slc Vec_to_Slc(const Vec * vec)
 {
     return Vec_slice(vec, 0, Vec_len(vec));
+}
+
+static inline void Vec_map(const Vec * vec, F f)
+{
+    Slc slc;
+
+    slc = Vec_to_Slc(vec);
+    Slc_map(& slc, f);
+}
+
+static inline void Vec_del_items(const Vec * vec)
+{
+    Slc slc;
+
+    slc = Vec_to_Slc(vec);
+    Slc_del_items(& slc);
+}
+
+static inline void Vec_erase(Vec * vec)
+{
+    Vec_del_items(vec);
+    Vec_del(vec);
+}
+
+static inline void Vec_dbg(const Vec * vec)
+{
+    Slc slc;
+
+    slc = Vec_to_Slc(vec);
+    Slc_dbg(& slc);
 }
 
 #endif

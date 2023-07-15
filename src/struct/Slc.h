@@ -93,6 +93,13 @@ static inline void Slc_map(const Slc * slc, F f)
     mem_map(slc->ptr, slc->len, Intr_size(slc->intr), f);
 }
 
+static inline void Slc_del_items(const Slc * slc)
+{
+    if (Intr_del(slc->intr) == do_nothing) return ;
+
+    Slc_map(slc, Intr_del(slc->intr));
+}
+
 static inline void Slc_dbg(const Slc * slc)
 {
     Slc_map(slc, (F) Intr_dbg(Slc_item_intr((slc))));
@@ -157,6 +164,27 @@ __always_inline static Slc Slc_chop_front_check(Slc * slc, I64 len)
     if (unlikely(len >= slc->len)) return Slc_chop_all(slc);
 
     return Slc_chop_front(slc, len);
+}
+
+__always_inline static I64 Slc_find_cmp(const Slc * slc, const void * item, Cmp cmp)
+{
+    for (I64 k = 0; k < slc->len; k ++)
+    {
+        if (equal(Slc_get(slc, k), item, cmp)) return k;
+    }
+
+    return NO_INDEX;
+}
+
+#define Slc_find_gen(type) \
+__always_inline static I64 Slc_find##_##type(const Slc * slc, type val) \
+{ \
+    for (I64 k = 0; k < slc->len; k ++) \
+    { \
+        if (deref(type) Slc_get(slc, k) == val) return k; \
+    } \
+ \
+    return NO_INDEX; \
 }
 
 #endif

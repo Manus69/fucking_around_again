@@ -14,7 +14,7 @@ void Arr_test(I64 len)
     // I64_dbg(& x);
     Arr_dbg(& a);
 
-    Arr_del(& a);
+    Arr_del_struct(& a);
 }
 
 #include "struct/Vec.h"
@@ -30,7 +30,7 @@ void Vec_test(I64 len)
 
     Vec_push(& v, (I64) -1);
     I64_dbg(Vec_last(& v));
-    Vec_del(& v);
+    Vec_del_struct(& v);
 }
 
 #include "alg/sort.h"
@@ -50,18 +50,30 @@ void sort_test(I64 len)
     // Slc_dbg(& s);
     I64_dbg(Slc_last(& s));
 
-    Vec_del(& v);
+    // Vec_del_struct(& v);
+    Vec_erase(& v);
 }
 
 #include "type/Str.h"
+#include "type/Cstr.h"
+#include "io/io.h"
+#define FNAME "text_file.txt"
 void Str_test()
 {
-    
+    // char * x = "eat ass";
+    // Cstr_dbg(& x);
+    Vec v = io_read_txt_file_ln(FNAME);
+    sort(& v, Vec, Str);
+    // Vec_dbg(& v);
+    Str_dbg(Vec_last(& v));
+    Vec_erase(& v);
 }
 
+//del in interface
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
     sort_test(1 << 25);
+    // Str_test();
 }

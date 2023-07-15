@@ -6,6 +6,7 @@
 mem_put_gen(U8)
 mem_swap_gen(U8)
 mem_cmp_gen(U8)
+mem_del_gen_noop(U8)
 dbg_gen(U8, "%u")
 
 __always_inline static U64 U8_hash(const void * ptr)

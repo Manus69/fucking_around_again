@@ -1,13 +1,13 @@
 cc = gcc
 flags = -Wall -Wextra -g -fsanitize=address
-flags_release = -Wall -Wextra -O2 -flto -funroll-loops -D NDEBUG \
+flags_release = -Wall -Wextra -Ofast -flto -funroll-loops -D NDEBUG \
 -funsafe-math-optimizations \
 -fprefetch-loop-arrays \
 -ffast-math \
 -fpeel-loops \
--fno-strict-aliasing \
-# -funswitch-loops \
+# -fno-strict-aliasing \
 # -funit-at-a-time
+# -funswitch-loops \
 # -fdata-sections
 # -ftracer
 # -funroll-all-loops 

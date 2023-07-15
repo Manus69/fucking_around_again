@@ -32,6 +32,9 @@ __always_inline static void type##_put(void * target, const void * src) \
 __always_inline static I64 type##_cmp(const void * lhs, const void * rhs) \
 { return deref(type) lhs < deref(type) rhs ? -1 : deref(type) lhs > deref(type) rhs;}
 
+#define mem_del_gen_noop(type) \
+__always_inline static void type##_del(void * ptr) {do_nothing(ptr);}
+
 static inline void * mem_allocate(I64 size)
 {
     void * ptr;

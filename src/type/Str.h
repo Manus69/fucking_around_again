@@ -3,7 +3,10 @@
 
 #include "Intr.h"
 #include "Cstr.h"
+#include "char.h"
 #include "../struct/Buf.h"
+#include "../struct/Slc.h"
+#include "../struct/Vec.h"
 
 typedef struct Str Str;
 
@@ -16,6 +19,8 @@ struct Str
 void Str_pushc(Str * str, char c);
 void Str_push_cstr_len(Str * str, const char * cstr, I64 len);
 void Str_push_cstr(Str * str, const char * cstr);
+Vec Str_splitc(const Str * str, char c);
+Vec Str_split_ln(const Str * str);
 
 static inline Str Str_init_len(const char * cstr, I64 len)
 {
@@ -32,10 +37,25 @@ static inline Str Str_init(const char * cstr)
     return Str_init_len(cstr, strlen(cstr));
 }
 
-static inline void Str_del(Str * str)
+static inline Str Str_init_Buf(const Buf * buf)
+{
+    return Str_init_len(Buf_bytes(buf), Buf_size(buf));
+}
+
+static inline Str Str_init_Slc(const Slc * slc)
+{
+    return Str_init_len(Slc_ptr(slc), Slc_len(slc));
+}
+
+static inline void Str_del_Str(Str * str)
 {
     Buf_del(& str->buf);
     to_zero(* str);
+}
+
+static inline void Str_del(void * ptr)
+{
+    Str_del_Str(ptr);
 }
 
 __always_inline static I64 Str_len(const Str * str)
@@ -65,6 +85,16 @@ __always_inline static Str Str_append(Str * lhs, const Str * rhs)
     return * lhs;
 }
 
+__always_inline static Slc Str_slice(const Str * str, I64 index, I64 len)
+{
+    return Slc_init(Str_get(str, index), & char_Intr, len);
+}
+
+__always_inline static Slc Str_to_Slc(const Str * str)
+{
+    return Str_slice(str, 0, Str_len(str));
+}
+
 __always_inline static I64 Str_cmp(const void * lhs, const void * rhs)
 {
     I64 len;
@@ -81,7 +111,10 @@ __always_inline static U64 Str_hash(const void * ptr)
 
 static inline void Str_dbg(const void * ptr)
 {
-    Cstr_dbg(Str_cstr(ptr));
+    Cstr cstr;
+
+    cstr = Str_cstr(ptr);
+    Cstr_dbg(& cstr);
 }
 
 mem_put_gen(Str)

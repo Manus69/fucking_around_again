@@ -21,10 +21,15 @@ static inline Buf Buf_init_zero(I64 size)
     return (Buf) {mem_allocate_zero(size), size};
 }
 
-static inline void Buf_del(Buf * buf)
+static inline void Buf_del_struct(Buf * buf)
 {
     mem_del(buf->bytes);
     to_zero(* buf);
+}
+
+static inline void Buf_del(void * ptr)
+{
+    Buf_del_struct(ptr);
 }
 
 __always_inline static I64 Buf_size(const Buf * buf)

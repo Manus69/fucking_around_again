@@ -28,10 +28,15 @@ __always_inline static I64 Arr_len(const Arr * arr)
     return arr->len;
 }
 
-static inline void Arr_del(Arr * arr)
+static inline void Arr_del_struct(Arr * arr)
 {
     mem_del(arr->data);
     to_zero(* arr);
+}
+
+static inline void Arr_del(void * ptr)
+{
+    Arr_del_struct(ptr);
 }
 
 __always_inline static I64 Arr_item_size(const Arr * arr)
@@ -75,6 +80,20 @@ static inline void Arr_map(const Arr * arr, F f)
 
     slc = Arr_to_Slc(arr);
     Slc_map(& slc, f);
+}
+
+static inline void Arr_del_items(const Arr * arr)
+{
+    Slc slc;
+
+    slc = Arr_to_Slc(arr);
+    Slc_del_items(& slc);
+}
+
+static inline void Arr_erase(void * ptr)
+{
+    Arr_del_items(ptr);
+    Arr_del(ptr);
 }
 
 static inline void Arr_dbg(const Arr * arr)

@@ -6,6 +6,7 @@
 mem_put_gen(I64)
 mem_swap_gen(I64)
 mem_cmp_gen(I64)
+mem_del_gen_noop(I64)
 dbg_gen(I64, "%ld ")
 
 __always_inline static U64 I64_hash(const void * ptr)

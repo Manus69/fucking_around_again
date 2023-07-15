@@ -6,6 +6,7 @@
 mem_put_gen(char)
 mem_swap_gen(char)
 mem_cmp_gen(char)
+mem_del_gen_noop(char)
 dbg_gen(char, "%c ");
 
 __always_inline static U64 char_hash(const void * ptr)

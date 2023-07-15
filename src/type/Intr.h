@@ -9,6 +9,7 @@ static const Intr type##_Intr = (Intr) \
 { \
     type##_put, \
     type##_swap, \
+    type##_del, \
     type##_cmp, \
     type##_hash, \
     type##_dbg, \
@@ -21,6 +22,7 @@ struct Intr
 {
     Put     put;
     Swap    swap;
+    Del     del;
     Cmp     cmp;
     Hash    hash;
     Dbg     dbg;
@@ -35,6 +37,11 @@ __always_inline static Put Intr_put(const Intr * intr)
 __always_inline static Swap Intr_swap(const Intr * intr)
 {
     return intr->swap;
+}
+
+__always_inline static Del Intr_del(const Intr * intr)
+{
+    return intr->del;
 }
 
 __always_inline static Cmp Intr_cmp(const Intr * intr)
