@@ -81,11 +81,28 @@ void Pair_test()
     Pair_erase(& p);
 }
 
+#include "struct/Set.h"
+void Set_test()
+{
+    Set s = Set_init(I64);
+
+    I64 n = 1 << 25;
+    for (I64 k = 0; k < n; k ++)
+    {
+        Set_insert(& s, n - k);
+    }
+
+    // Set_dbg(& s);
+    I64_dbg(Set_any(& s));
+    Set_del(& s);
+}
+
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
-    sort_test(1 << 25);
+    // sort_test(1 << 25);
     // Str_test();
     // Pair_test();
+    Set_test();
 }

@@ -114,12 +114,38 @@ static inline void Vec_erase(Vec * vec)
     Vec_del(vec);
 }
 
-static inline void Vec_dbg(const Vec * vec)
+static inline I64 Vec_find_cmp(const Vec * vec, const void * item, Cmp cmp)
+{
+    Slc slc;
+
+    slc = Vec_to_Slc(vec);
+
+    return Slc_find_cmp(& slc, item, cmp);
+}
+
+static inline bool Vec_contains_cmp(const Vec * vec, const void * item, Cmp cmp)
+{
+    return Vec_find_cmp(vec, item, cmp) != NO_INDEX;
+}
+
+static inline void Vec_dbg(const void * vec)
 {
     Slc slc;
 
     slc = Vec_to_Slc(vec);
     Slc_dbg(& slc);
 }
+
+mem_put_gen(Vec)
+mem_swap_gen(Vec)
+
+static const Intr Vec_Intr = (Intr)
+{
+    .put = Vec_put,
+    .swap = Vec_swap,
+    .del = Vec_del,
+    .dbg = Vec_dbg,
+    .size = sizeof(Vec),
+};
 
 #endif
