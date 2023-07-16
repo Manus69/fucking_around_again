@@ -58,6 +58,7 @@ static inline void Str_del(void * ptr)
     Str_del_Str(ptr);
 }
 
+__attribute__ ((pure, hot))
 __always_inline static I64 Str_len(const Str * str)
 {
     return str->index;
@@ -68,6 +69,7 @@ __always_inline static void Str_setc(const Str * str, I64 index, char c)
     Buf_set(& str->buf, index, c);
 }
 
+__attribute__ ((pure, hot))
 __always_inline static char * Str_get(const Str * str, I64 index)
 {
     return Buf_get(& str->buf, index);
@@ -104,6 +106,7 @@ __always_inline static I64 Str_cmp(const void * lhs, const void * rhs)
     return strncmp(Str_cstr(lhs), Str_cstr(rhs), len + 1);
 }
 
+__attribute__ ((pure, hot))
 __always_inline static U64 Str_hash(const void * ptr)
 {
     return Cstr_hash_len(Str_cstr(ptr), Str_len(ptr));

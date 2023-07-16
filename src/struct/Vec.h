@@ -47,16 +47,19 @@ __always_inline static I64 Vec_item_size(const Vec * vec)
     return Intr_size(Vec_item_intr(vec));
 }
 
+__attribute__ ((pure, hot))
 __always_inline static I64 Vec_len(const Vec * vec)
 {
     return vec->index;
 }
 
+__attribute__ ((pure, hot))
 __always_inline static bool Vec_empty(const Vec * vec)
 {
     return vec->index == 0;
 }
 
+__attribute__ ((pure, hot))
 __always_inline static void * Vec_get(const Vec * vec, I64 index)
 {
     return Arr_get(& vec->arr, index);
@@ -72,6 +75,7 @@ __always_inline static void * Vec_last(const Vec * vec)
     return Vec_get(vec, vec->index - 1);
 }
 
+__attribute__ ((hot))
 __always_inline static void Vec_set_ptr(const Vec * vec, I64 index, const void * ptr)
 {
     Arr_set_ptr(& vec->arr, index, ptr);

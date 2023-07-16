@@ -97,12 +97,15 @@ void Set_test()
     Set_del(& s);
 }
 
+//
+//refactor __ to __attr__ (...)
+//
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
-    // sort_test(1 << 25);
+    sort_test(1 << 25);
     // Str_test();
     // Pair_test();
-    Set_test();
+    // Set_test();
 }

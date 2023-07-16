@@ -28,6 +28,7 @@ static inline I64 _n(const Set * set)
     return Arr_len(& set->buckets);
 }
 
+__attribute__ ((flatten))
 static inline I64 _index(const void * item, I64 n, Hash hash)
 {
     return hash(item) % n;
@@ -38,6 +39,7 @@ static inline Vec * _bucket_by_index(const Set * set, I64 index)
     return Arr_get(& set->buckets, index);
 }
 
+__attribute__ ((flatten))
 static inline Vec * _bucket(const Set * set, const void * item)
 {
     I64 index;

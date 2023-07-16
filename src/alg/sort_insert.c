@@ -1,5 +1,6 @@
 #include "sort.h"
 
+__attribute__ ((nonnull, flatten))
 void sort_insert_slice_cmp(Slc * slc, Cmp cmp)
 {
     I64 len;

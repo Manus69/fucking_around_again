@@ -63,21 +63,25 @@ __always_inline static void * Slc_ptr(const Slc * slc)
     return slc->ptr;
 }
 
+__attribute__ ((pure, hot))
 __always_inline static void * Slc_get(const Slc * slc, I64 index)
 {
     return slc->ptr + index * Slc_item_size(slc);
 }
 
+__attribute__ ((pure, hot))
 __always_inline static void * Slc_first(const Slc * slc)
 {
     return Slc_ptr(slc);
 }
 
+__attribute__ ((pure, hot))
 __always_inline static void * Slc_last(const Slc * slc)
 {
     return Slc_get(slc, slc->len - 1);
 }
 
+__attribute__ ((hot))
 __always_inline static void Slc_set_ptr(const Slc * slc, I64 index, const void * ptr)
 {
     Intr_put(slc->intr)(Slc_get(slc, index), ptr);

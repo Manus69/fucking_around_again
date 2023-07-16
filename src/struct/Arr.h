@@ -18,6 +18,7 @@ struct Arr
     I64             len;
 };
 
+__attribute__ ((access (read_only, 1)))
 static inline Arr Arr_init_intr(const Intr * intr, I64 len)
 {
     return (Arr) {mem_allocate(len * Intr_size(intr)), intr, len};

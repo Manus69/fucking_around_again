@@ -88,4 +88,24 @@ __always_inline static void Pair_set_ptr(const Pair * pair, const void * first, 
     Pair_set_second(pair, second);
 }
 
+mem_put_gen(Pair)
+mem_swap_gen(Pair)
+
+static inline void Pair_dbg(const void  * ptr)
+{
+    const Pair * pair;
+
+    pair = ptr;
+    Intr_dbg(pair->intr[0])(pair->first);
+    Intr_dbg(pair->intr[1])(pair->second);
+}
+
+static const Intr Pair_Intr = (Intr)
+{
+    .put = Pair_put,
+    .swap = Pair_swap,
+    .dbg = Pair_dbg,
+    .size = sizeof(Pair),
+};
+
 #endif

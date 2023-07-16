@@ -25,6 +25,7 @@ __always_inline static bool _is_sorted(const Slc * restrict lhs, const Slc * res
     return Slc_empty(rhs) || (cmp(Slc_last(lhs), Slc_first(rhs)) <= 0);
 }
 
+__attribute__ ((flatten, nonnull))
 static inline void _merge(Slc * restrict target, Slc * restrict lhs, Slc * restrict rhs, Cmp cmp)
 {
     if (unlikely(_is_sorted(lhs, rhs, cmp))) _dump_all(target, lhs, rhs);
@@ -100,6 +101,7 @@ static inline I64 _preprocess(Slc * slc, Cmp cmp)
     // return _preprocess_swap(slc, cmp);
 }
 
+__attribute__ ((nonnull))
 void sort_merge_slice_cmp(Slc * slc, Cmp cmp)
 {
     I64 frame;

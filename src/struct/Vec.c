@@ -20,6 +20,7 @@ __always_inline static void _double_capacity(Vec * vec)
     _extend(vec, vec->index);
 }
 
+__attribute__ ((hot, nonnull))
 __always_inline void Vec_push_ptr(Vec * vec, const void * ptr)
 {
     if (unlikely(_no_capacity(vec))) _double_capacity(vec);
@@ -41,3 +42,8 @@ void Vec_reserve(Vec * vec, I64 capacity)
 
     _extend(vec, capacity - _capacity(vec));
 }
+
+// void Vec_remove_index(Vec * vec, I64 index)
+// {
+
+// }

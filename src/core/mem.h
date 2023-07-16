@@ -21,20 +21,24 @@ void mem_vmap(F f, ...);
 #define mem_swap(lhs, rhs) mem_swap_t(lhs, rhs, typeof(* lhs))
 
 #define mem_swap_gen(type) \
+__attribute__ ((hot, nonnull)) \
 __always_inline static void type##_swap(void * lhs, void * rhs) \
 { mem_swap_t(lhs, rhs, type); }
 
 #define mem_put_gen(type) \
+__attribute__ ((hot, nonnull)) \
 __always_inline static void type##_put(void * target, const void * src) \
 { deref(type) target = deref(type) src; }
 
 #define mem_cmp_gen(type) \
+__attribute__ ((hot, pure, nonnull)) \
 __always_inline static I64 type##_cmp(const void * lhs, const void * rhs) \
 { return deref(type) lhs < deref(type) rhs ? -1 : deref(type) lhs > deref(type) rhs;}
 
 #define mem_del_gen_noop(type) \
 __always_inline static void type##_del(void * ptr) {do_nothing(ptr);}
 
+__attribute__ ((returns_nonnull, hot))
 static inline void * mem_allocate(I64 size)
 {
     void * ptr;
@@ -45,6 +49,7 @@ static inline void * mem_allocate(I64 size)
     return NULL;
 }
 
+__attribute__ ((returns_nonnull, hot))
 static inline void * mem_allocate_zero(I64 size)
 {
     void * ptr;
@@ -60,6 +65,7 @@ static inline void mem_del(void * ptr)
     free(ptr);
 }
 
+__attribute__ ((nonnull, returns_nonnull, hot))
 static inline void * mem_reallocate(void * ptr, I64 size)
 {
     void * new_ptr;
@@ -70,11 +76,13 @@ static inline void * mem_reallocate(void * ptr, I64 size)
     return NULL;
 }
 
+__attribute__ ((returns_nonnull, hot))
 static inline void * mem_extend(void * ptr, I64 current_size, I64 extra_size)
 {
     return mem_reallocate(ptr, current_size + extra_size);
 }
 
+__attribute__ ((returns_nonnull))
 static inline void * mem_extend_zero(void * ptr, I64 current_size, I64 extra_size)
 {
     void * _ptr;
@@ -136,6 +144,7 @@ __always_inline static void do_nothing(void * ptr)
     (void) ptr;
 }
 
+__attribute__ ((flatten, pure))
 __always_inline static bool equal(const void * lhs, const void * rhs, Cmp cmp)
 {
     return cmp(lhs, rhs) == 0;
