@@ -7,5 +7,6 @@
 
 void sort_merge_slice_cmp(Slc * slc, Cmp cmp);
 void sort_insert_slice_cmp(Slc * slc, Cmp cmp);
+void sort_ins_test(I64 * ptr, I64 len);
 
 #endif

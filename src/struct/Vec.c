@@ -43,7 +43,34 @@ void Vec_reserve(Vec * vec, I64 capacity)
     _extend(vec, capacity - _capacity(vec));
 }
 
-// void Vec_remove_index(Vec * vec, I64 index)
-// {
+static inline void _remove(Vec * vec, I64 index)
+{
+    if (index == vec->index - 1) return (void) Vec_pop(vec);
 
-// }
+    memmove(Vec_get(vec, index), Vec_get(vec, index + 1), (vec->index - index) * Vec_item_size(vec));
+    -- vec->index;
+}
+
+void Vec_remove_index_buff(void * target, Vec * vec, I64 index)
+{
+    Intr_put(Vec_item_intr(vec))(target, Vec_get(vec, index));
+
+    _remove(vec, index);
+}
+
+void Vec_remove_index(Vec * vec, I64 index)
+{
+    _remove(vec, index);
+}
+
+STATUS Vec_remove_item_buff(void * target, Vec * vec, const void * item)
+{
+    I64 index;
+
+    index = Vec_find_cmp(vec, item, Intr_cmp(Vec_item_intr(vec)));
+    if (index == NO_INDEX) return STATUS_NOT_OK;
+
+    Vec_remove_index_buff(target, vec, index);
+
+    return STATUS_OK;
+}

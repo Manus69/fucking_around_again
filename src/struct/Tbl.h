@@ -1,7 +1,6 @@
 #ifndef TBL_H
 #define TBL_H
 
-#include "Arr.h"
 #include "Vec.h"
 
 typedef struct Tbl Tbl;
@@ -34,6 +33,12 @@ __attribute__ ((pure, hot))
 static inline Vec * Tbl_row(const Tbl * tbl, I64 n)
 {
     return Arr_get(& tbl->rows, n);
+}
+
+__attribute__ ((pure))
+static inline I64 Tbl_row_len(const Tbl * tbl, I64 row)
+{
+    return Vec_len(Tbl_row(tbl, row));
 }
 
 static inline const Intr * Tbl_item_intr(const Tbl * tbl)
@@ -73,6 +78,28 @@ __attribute__ ((pure, hot))
 static inline void * Tbl_get(const Tbl * tbl, I64 row, I64 col)
 {
     return Vec_get(Tbl_row(tbl, row), col);
+}
+
+static inline void Tbl_set_ptr(const Tbl * tbl, I64 row, I64 col, const void * ptr)
+{
+    Vec_set_ptr(Tbl_row(tbl, row), col, ptr);
+}
+
+static inline void Tbl_push_row(const Tbl * tbl, I64 row, const void * ptr)
+{
+    Vec_push_ptr(Tbl_row(tbl, row), ptr);
+}
+
+__attribute__ ((pure, flatten))
+static inline I64 Tbl_find_in_row_cmp(const Tbl * tbl, I64 row, const void * ptr, Cmp cmp)
+{
+    return Vec_find_cmp(Tbl_row(tbl, row), ptr, cmp);
+}
+
+__attribute__ ((pure))
+static inline bool Tbl_row_contains_cmp(const Tbl * tbl, I64 row, const void * ptr, Cmp cmp)
+{
+    return Tbl_find_in_row_cmp(tbl, row, ptr, cmp) != NO_INDEX;
 }
 
 #endif

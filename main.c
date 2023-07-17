@@ -54,6 +54,23 @@ void sort_test(I64 len)
     Vec_erase(& v);
 }
 
+void sort_test2(I64 len)
+{
+    Vec v = Vec_init(I64);
+    for (I64 k = 0; k < len; k ++)
+    {
+        Vec_push(& v, len - k);
+    }
+
+    Slc slc = Vec_to_Slc(& v);
+    // sort_insert_slice_cmp(& slc, I64_cmp);
+    sort_ins_test(Slc_first(& slc), Slc_len(& slc));
+    // Vec_dbg(& v);
+    I64_dbg(Vec_last(& v));
+
+    Vec_del(& v);
+}
+
 #include "type/Str.h"
 #include "type/Cstr.h"
 #include "io/io.h"
@@ -91,21 +108,36 @@ void Set_test()
     {
         Set_insert(& s, n - k);
     }
+    // Set_dbg(& s);
+
+    for (I64 k = 0; k < n; k ++)
+    {
+        Set_insert(& s, n - k);
+    }
 
     // Set_dbg(& s);
+
+    for (I64 k = 0; k < n; k ++)
+    {
+        Set_remove(& s, k);
+    }
+
     I64_dbg(Set_any(& s));
+    // Set_dbg(& s);
     Set_del(& s);
 }
 
 //
 //refactor __ to __attr__ (...)
+//static in intr * ?
 //
 int main()
 {
     // Arr_test(1 << 10);
     // Vec_test(1 << 25);
-    sort_test(1 << 25);
+    // sort_test(1 << 25);
+    // sort_test2(1 << 16);
     // Str_test();
     // Pair_test();
-    // Set_test();
+    Set_test();
 }

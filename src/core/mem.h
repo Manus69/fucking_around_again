@@ -128,17 +128,6 @@ static inline void mem_set_zero(void * ptr, I64 n_items, I64 item_size)
     memset(ptr, 0, n_items * item_size);
 }
 
-static inline void * mem_shift(void * ptr, I64 current_size, I64 n_bytes)
-{
-    void * new_ptr;
-
-    new_ptr = mem_extend(ptr, current_size, n_bytes);
-    memmove(new_ptr + n_bytes, new_ptr, n_bytes);
-    memset(new_ptr, 0, n_bytes);
-
-    return new_ptr;
-}
-
 __always_inline static void do_nothing(void * ptr)
 {
     (void) ptr;

@@ -6,7 +6,7 @@ flags_release = -Wall -Wextra -Ofast -flto -funroll-loops -D NDEBUG \
 -ffast-math \
 -fpeel-loops \
 -march=native -mtune=native \
--Winline
+-Winline \
 # -finline-functions
 # -g -pg
 # -fno-strict-aliasing \

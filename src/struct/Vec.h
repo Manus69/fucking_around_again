@@ -20,6 +20,9 @@ struct Vec
 void Vec_push_many(Vec * vec, const void * ptr, I64 n_items);
 void Vec_push_ptr(Vec * vec, const void * ptr);
 void Vec_reserve(Vec * vec, I64 capacity);
+void Vec_remove_index_buff(void * target, Vec * vec, I64 index);
+void Vec_remove_index(Vec * vec, I64 index);
+STATUS Vec_remove_item_buff(void * target, Vec * vec, const void * item);
 
 static inline Vec Vec_init_intr(const Intr * intr, I64 capacity)
 {
@@ -118,6 +121,7 @@ static inline void Vec_erase(Vec * vec)
     Vec_del(vec);
 }
 
+__attribute__ ((pure, flatten))
 static inline I64 Vec_find_cmp(const Vec * vec, const void * item, Cmp cmp)
 {
     Slc slc;

@@ -55,12 +55,14 @@ __always_inline static const Intr * Arr_item_intr(const Arr * arr)
     return arr->intr;
 }
 
-__always_inline static void * Arr_get(const Arr * arr, I64 index)
+__attribute__ ((hot, always_inline, pure))
+static inline void * Arr_get(const Arr * arr, I64 index)
 {
     return arr->data + index * Arr_item_size(arr);
 }
 
-__always_inline static void Arr_set_ptr(const Arr * arr, I64 index, const void * ptr)
+__attribute__ ((hot, flatten, always_inline))
+static inline void Arr_set_ptr(const Arr * arr, I64 index, const void * ptr)
 {
     Intr_put(arr->intr)(Arr_get(arr, index), ptr);
 }
