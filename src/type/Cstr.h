@@ -18,7 +18,7 @@ __always_inline static void Cstr_del(void * ptr)
 
 mem_put_gen(Cstr)
 mem_swap_gen(Cstr)
-dbg_gen(Cstr, "%s\n")
+dbg_gen(Cstr, "'%s'")
 
 Intr_gen(Cstr)
 

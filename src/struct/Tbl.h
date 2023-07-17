@@ -71,7 +71,8 @@ static inline void Tbl_del(void * ptr)
 
 static inline void Tbl_del_items(Tbl * tbl)
 {
-    Tbl_map(tbl, Intr_del(Tbl_item_intr(tbl)));
+    if (Intr_del(Tbl_item_intr(tbl)))
+        Tbl_map(tbl, Intr_del(Tbl_item_intr(tbl)));
 }
 
 __attribute__ ((pure, hot))
@@ -100,6 +101,17 @@ __attribute__ ((pure))
 static inline bool Tbl_row_contains_cmp(const Tbl * tbl, I64 row, const void * ptr, Cmp cmp)
 {
     return Tbl_find_in_row_cmp(tbl, row, ptr, cmp) != NO_INDEX;
+}
+
+static inline void Tbl_dbg(const void * tbl)
+{
+    for (I64 k = 0; k < Tbl_n_rows(tbl); k ++)
+    {
+        printf("| ");
+        if (Tbl_row_len(tbl, k))
+            Vec_dbg(Tbl_row(tbl, k));
+        printf(" |");
+    }
 }
 
 #endif

@@ -127,9 +127,25 @@ void Set_test()
     Set_del(& s);
 }
 
+#include "struct/Ass.h"
+void Ass_test()
+{
+    I64 n = 100;
+    Ass ass = Ass_init(I64, Str);
+    for (I64 k = 0; k < n; k ++)
+    {
+        Ass_set(& ass, k, Str_init("eat ass 6666666"));
+    }
+
+
+
+    Ass_dbg(& ass);
+
+    Ass_erase(& ass);
+}
+
 //
 //refactor __ to __attr__ (...)
-//static in intr * ?
 //
 int main()
 {
@@ -139,5 +155,6 @@ int main()
     // sort_test2(1 << 16);
     // Str_test();
     // Pair_test();
-    Set_test();
+    // Set_test();
+    Ass_test();
 }
